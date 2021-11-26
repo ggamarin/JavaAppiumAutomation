@@ -3,6 +3,8 @@ Thumbs.db*
 HELP.md
 build/
 target/
+/libs
+/apks
 
 ### STS ###
 .apt_generated
