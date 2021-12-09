@@ -92,4 +92,28 @@ public class ArticlePageObject extends  MainPageObject{
                 5
         );
     }
+
+    public void addArticleToExistingList(String name_of_folder)
+    {
+        this.waitForElementAndClick(
+                By.xpath(OPTIONS_BUTTON),
+                "Cannon find button to open article options",
+                15
+        );
+
+        this.waitForElementPresent(
+                By.xpath(LIST_VIEW),
+                "Cannot find list",
+                5);
+
+        this.waitForElementAndClick(
+                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                "Cannot find 'Add to reading list' button",
+                15
+        );
+        this.waitForElementAndClick(By.id("org.wikipedia:id/item_title"),
+                "Не найдена папка для закладок и искомым именем при добавлении закладки!",
+                5);
+    }
+
 }

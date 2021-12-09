@@ -12,11 +12,14 @@ public class NavigationUI extends MainPageObject {
         super(driver);
     }
 
-    public void clickMyList() {
+    public void clickMyLists() {
+
         this.waitForElementAndClick(
-                By.xpath("//android.widget.FrameLayout[@content-desc='My lists']"),
+                By.xpath(MY_LISTS_LINK),
                 "Cannot find navigation button to My list",
                 5
         );
+
+        this.waitForElementPresent(By.id("org.wikipedia:id/item_container"),"Cannot find folder", 10);
     }
 }

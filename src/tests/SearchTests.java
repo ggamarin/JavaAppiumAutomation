@@ -4,6 +4,7 @@ import lib.CoreTestCase;
 import lib.ui.SearchPageObject;
 import org.junit.Test;
 
+
 public class SearchTests extends CoreTestCase {
     @Test
     public void testSearch() {
@@ -49,6 +50,36 @@ public class SearchTests extends CoreTestCase {
         String search_line = "zvergsf";
         SearchPageObject.typeSearchLine(search_line);
         SearchPageObject.waitForEmptyResultsLabel();
-        SearchPageObject.assertThereiIsNoResultOfSearch();
+        SearchPageObject.assertThereIsNoResultOfSearch();
+    }
+
+
+
+    @Test
+    public void testSearchAndCancel()
+    {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+
+        int amount_of_search_results = SearchPageObject.getAmountOfFoundArticle();
+
+        assertTrue(
+                "Search result still present on the page",
+                amount_of_search_results > 0);
+
+        SearchPageObject.clickCancelSearch();
+        SearchPageObject.assertThereIsNoResultOfSearch();
+    }
+
+    @Test
+    public void testAssertTitle() throws InterruptedException {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        String search_line = "Java";
+        SearchPageObject.typeSearchLine(search_line);
+        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+        SearchPageObject.assertTextHasTitle();
     }
 }

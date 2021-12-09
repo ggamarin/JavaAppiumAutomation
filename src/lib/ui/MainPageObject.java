@@ -10,7 +10,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
+
+
 public class MainPageObject {
+
+
+
 
     protected AppiumDriver driver;
 
@@ -43,8 +48,8 @@ public class MainPageObject {
     }
 
 
-    public boolean waitForElementNotPresent(By by, String error_message, long timeoitInSeconds) {
-        WebDriverWait wait = new WebDriverWait(driver, timeoitInSeconds);
+    public boolean waitForElementNotPresent(By by, String error_message, long timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
         return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
@@ -153,4 +158,5 @@ public class MainPageObject {
             throw new AssertionError(default_message + " " + error_message);
         }
     }
+
 }
