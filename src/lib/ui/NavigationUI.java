@@ -3,10 +3,10 @@ package lib.ui;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
-public class NavigationUI extends MainPageObject {
-    private static final String
-    MY_LISTS_LINK = "xpath://android.widget.FrameLayout[@content-desc='My lists']",
-    ITEM_CONTAINER="id:org.wikipedia:id/item_container";
+abstract public class NavigationUI extends MainPageObject {
+   protected static  String
+    MY_LISTS_LINK ,
+    ITEM_CONTAINER;
 
     public NavigationUI (AppiumDriver driver)
     {

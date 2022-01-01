@@ -2,20 +2,22 @@ package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
 
+import lib.Platform;
 import org.openqa.selenium.WebElement;
 
-public class ArticlePageObject extends  MainPageObject{
+abstract public class ArticlePageObject extends  MainPageObject {
 
-    private static final String
-            TITLE = "id:org.wikipedia:id/view_page_title_text",
-            FOOTER_ELEMENT = "xpath://*[@text='View page in browser']",
-            OPTIONS_BUTTON = "xpath://android.widget.ImageView[@content-desc='More options']",
-            OPTIONS_ADD_TO_MY_LIST_BUTTON = "xpath://android.widget.TextView[@text='Add to reading list']",
-            ADD_TO_MY_LIST_OVERLAY = "id:org.wikipedia:id/onboarding_button",
-            MY_LIST_NAME_INPUT = "id:org.wikipedia:id/text_input",
-            MY_LIST_OK_BUTTON = "xpath://*[@text='OK']",
-            CLOSE_ARTICLE_BUTTON = "xpath://android.widget.ImageButton[@content-desc='Navigate up']",
-            LIST_VIEW = "id://android.widget.ListView";
+   protected static String
+    TITLE,
+    FOOTER_ELEMENT,
+    OPTIONS_BUTTON ,
+    OPTIONS_ADD_TO_MY_LIST_BUTTON ,
+    ADD_TO_MY_LIST_OVERLAY,
+    MY_LIST_NAME_INPUT,
+    MY_LIST_OK_BUTTON ,
+    CLOSE_ARTICLE_BUTTON,
+    LIST_VIEW,
+    FOLDER_BY_NAME_TPL;
 
 
     public ArticlePageObject(AppiumDriver driver)
@@ -28,22 +30,32 @@ public class ArticlePageObject extends  MainPageObject{
         return this.waitForElementPresent(
                 TITLE,
                 "Cannot find article title on page",
-                10);
+                15);
     }
 
 
-    public String getArticleTitle()
-    {
+    public String getArticleTitle() {
         WebElement title_element = waitForTitleElement();
-        return title_element.getAttribute("text");
+        if (Platform.getInstance().isAndroid()) {
+            return title_element.getAttribute("text");
+        } else {
+            return title_element.getAttribute("name");
+        }
     }
 
     public void swipeToFooter()
     {
-        this.swipeUpToFindElement(
-                FOOTER_ELEMENT,
-                "Cannot find the end of article",
-                20);
+        if(Platform.getInstance().isAndroid()) {
+            this.swipeUpToFindElement(
+                    FOOTER_ELEMENT,
+                    "Cannot find the end of the article",
+                    40
+            );
+        } else {
+            this.swipeUpTillElementAppear(FOOTER_ELEMENT,
+                    "Cannot find the end of the article",
+                    40);
+        }
     }
 
     public void addArticleToMyList(String name_of_folder) {
@@ -53,10 +65,10 @@ public class ArticlePageObject extends  MainPageObject{
                 5
         );
 
-        this.waitForElementPresent(
+     /*   this.waitForElementPresent(
                 LIST_VIEW,
                 "Cannot find list",
-                5);
+                5);*/
 
         this.waitForElementAndClick(
                 OPTIONS_ADD_TO_MY_LIST_BUTTON,
@@ -90,12 +102,34 @@ public class ArticlePageObject extends  MainPageObject{
         );
     }
 
+    public void addArticlesToMySaved()
+    {
+        this.waitForElementAndClick(OPTIONS_ADD_TO_MY_LIST_BUTTON,
+                "Cannot find option to add article to reading list",
+                5);
+    }
+
     public void closeArticle()
     {
         this.waitForElementAndClick(
                 CLOSE_ARTICLE_BUTTON,
                 "Cannot close article, cannot find X link",
                 5
+        );
+    }
+    protected String getFolderXpathByName(String name_of_Folder)
+    {
+        return FOLDER_BY_NAME_TPL.replace("{FOLDER_NAME}",name_of_Folder);
+    }
+
+    public void openFolderByName(String name_of_folder)
+    {
+
+        String folder_name_xpath = getFolderXpathByName(name_of_folder);
+        this.waitForElementAndClick(
+                folder_name_xpath,
+                "Cannot find created folder",
+                10
         );
     }
 
@@ -107,18 +141,17 @@ public class ArticlePageObject extends  MainPageObject{
                 15
         );
 
-        this.waitForElementPresent(
+       /* this.waitForElementPresent(
                 LIST_VIEW,
                 "Cannot find list",
-                5);
+                5);*/
 
         this.waitForElementAndClick(
                OPTIONS_ADD_TO_MY_LIST_BUTTON,
                 "Cannot find 'Add to reading list' button",
                 15
         );
-
-        this.openFolderByName(name_of_folder);
+        openFolderByName(name_of_folder);
     }
 
 }

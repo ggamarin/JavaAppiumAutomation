@@ -16,13 +16,14 @@ public class WelcomePageObject extends MainPageObject
             GET_STARTED_BUTTON = "org.wikipedia:id/fragment_onboarding_done_button";
 
     //Локаторы  iOS
-//    private static final String
-//            STEP_LEARN_MORE_LINK = "Learn more about Wikipedia",
-//            STEP_NEW_WAYS_TO_EXPLORE = "New ways to explore",
-//            STEP_ADD_OR_EDIT_PREFERRED = "Add or edit preferred languages",
-//            STEP_LEARN_MORE_ABOUT_DATA_COLLECTED_LINK = "Learn more about data collected",
-//            NEXT_LINK = "Next",
-//            GET_STARTED_BUTTON = "Get started";
+  /* private static final String
+           STEP_LEARN_MORE_LINK = "Learn more about Wikipedia",
+           STEP_NEW_WAYS_TO_EXPLORE = "New ways to explore",
+           STEP_ADD_OR_EDIT_PREFERRED = "Add or edit preferred languages",
+            STEP_LEARN_MORE_ABOUT_DATA_COLLECTED_LINK = "Learn more about data collected",
+           NEXT_LINK = "Next",
+           SKIP = "id:Skip",
+            GET_STARTED_BUTTON = "Get started";*/
 
     public WelcomePageObject(AppiumDriver driver) {
         super(driver);
@@ -69,4 +70,9 @@ public class WelcomePageObject extends MainPageObject
                 "Cannot find and click 'Get Started' button",
                 10);
     }
+
+   /* public void clickSkip()
+    {
+        this.waitForElementAndClick(SKIP, "Cannot find and click skip button", 5 );
+    }*/
 }
